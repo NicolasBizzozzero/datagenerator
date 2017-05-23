@@ -92,7 +92,7 @@ class FirstNameDictionary:
         else:
             output = self.filepath
         with open(output, 'w') as file:
-            json.dump(self.content, file, indent=4)
+            json.dump(self.content, file, indent=4, sort_keys=True)
 
 
 def get_random_first_name(sex=Sex.Both):
