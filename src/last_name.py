@@ -1,33 +1,9 @@
-import json
-from src.vrac.maths import get_random_integer
+import src.vrac.maths
+import src.database_dictionary
 
 
-class LastNameDictionary:
-    def __init__(self, filepath: str="databases/last_name.json"):
-        self.filepath = filepath
-        self._load_dictionary()
-
-    def __str__(self) -> str:
-        return self.content.__str__()
-
-    def __repr__(self):
-        return self.content.__repr__()
-
-    def __index__(self):
-        return self.content.__index__()
-
-    def __getitem__(self, item):
-        return self.content[item]
-
-    def _load_dictionary(self):
-        """ Load the content of the dictionary from the database. """
-        with open(self.filepath) as file:
-            self.content = json.load(file)
-
-    def _get_new_id(self) -> int:
-        """ Increment the maximum ID of the database then returns it. """
-        self.content["__env__"]["max_ID"] += 1
-        return self.content["__env__"]["max_ID"]
+class LastNameDictionary(src.database_dictionary.DatabaseDictionary):
+    filepath = "databases/last_name.json"
 
     def add_name(self, last_name: str):
         """ Add a new name in the dictionary. You can also permanently add it
@@ -38,10 +14,6 @@ class LastNameDictionary:
             self.content[last_name]
         except KeyError:
             self.content[last_name] = {"ID": self._get_new_id()}
-
-    def get_max_id(self) -> int:
-        """ Getter for the max_ID variable from the dictionary. """
-        return self.content["__env__"]["max_ID"]
 
     def last_names(self) -> iter:
         """ Iterate over the names of the dictionary. """
@@ -55,15 +27,7 @@ class LastNameDictionary:
         """ Return a random name from the dictionary. """
         names = list(self.last_names())
         size = len(names)
-        return names[get_random_integer(0, size)]
-
-    def _overwrite(self, safe: bool = True):
-        if safe:
-            output = self.filepath + "_safe.json"
-        else:
-            output = self.filepath
-        with open(output, 'w') as file:
-            json.dump(self.content, file, indent=4, sort_keys=True)
+        return names[src.vrac.maths.get_random_integer(0, size)]
 
 
 def get_random_last_name():

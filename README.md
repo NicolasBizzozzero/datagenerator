@@ -8,3 +8,6 @@
 
 ## Places
 * https://www.maxmind.com/fr/free-world-cities-database
+
+# TODO
+* Add continent to all countries (or subdivise the big json document into 7 dictionaries).
