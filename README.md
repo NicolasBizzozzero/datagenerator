@@ -11,3 +11,4 @@
 
 # TODO
 * Add continent to all countries (or subdivise the big json document into 7 dictionaries).
+* Replace Undefined sex for a lot of names (maybe with this lib: https://pypi.python.org/pypi/SexMachine ).
