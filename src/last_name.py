@@ -1,12 +1,10 @@
 import json
 from src.vrac.maths import get_random_integer
-from enum import Enum
 
 
 class LastNameDictionary:
-    filepath = "../res/last_name.json"
-
-    def __init__(self):
+    def __init__(self, filepath: str="databases/last_name.json"):
+        self.filepath = filepath
         self._load_dictionary()
 
     def __str__(self) -> str:
@@ -32,8 +30,8 @@ class LastNameDictionary:
         return self.content["__env__"]["max_ID"]
 
     def add_name(self, last_name: str):
-        """ Add a new name in the dictionary. You can also permanently add it to the database by calling '_overwrite'
-        right after adding it.
+        """ Add a new name in the dictionary. You can also permanently add it
+        to the database by calling '_overwrite' right after adding it.
         """
         last_name = last_name.upper()
         try:
@@ -59,9 +57,13 @@ class LastNameDictionary:
         size = len(names)
         return names[get_random_integer(0, size)]
 
-    def _overwrite(self):
-        with open(self.filepath, 'w') as file:
-            json.dump(self.content, file, indent=4)
+    def _overwrite(self, safe: bool = True):
+        if safe:
+            output = self.filepath + "_safe.json"
+        else:
+            output = self.filepath
+        with open(output, 'w') as file:
+            json.dump(self.content, file, indent=4, sort_keys=True)
 
 
 def get_random_last_name():
