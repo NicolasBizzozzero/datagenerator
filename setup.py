@@ -20,7 +20,7 @@ with open(path.join(_HERE, _README_FILE_NAME),
     long_description = file.read()
 
 setup(
-    name="clustering",
+    name="datagenerator",
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
@@ -30,12 +30,13 @@ setup(
     author="BIZZOZZÉRO Nicolas",
     author_email="nicolasbizzozzero@gmail.com",
 
-    description="A complete fuzzy clustering framework",
+    description=("Quick, easy to use and complete framework for data generati"
+                 "on"),
     long_description=long_description,
     long_description_content_type="text/markdown",
 
     license="gpl-v3",
-    url="https://github.com/NicolasBizzozzero/clustering",
+    url="https://github.com/NicolasBizzozzero/datagenerator",
     download_url="",
 
     # See https://pypi.org/classifiers
@@ -43,18 +44,14 @@ setup(
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Console",
-        "Intended Audience :: Science/Research",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Natural Language :: English",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3.7",
-        "Topic :: Scientific/Engineering :: Artificial Intelligence",
-        "Topic :: Scientific/Engineering :: Mathematics",
     ],
 
     # What does your project relate to?
-    keywords=["cli", "clustering", "fuzzy", "fuzzy_clustering", "research",
-              "upmc", "sorbonne", "sorbonne_universite"],
+    keywords=[],
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
@@ -69,10 +66,7 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
-        "click >= 7.0",
-        "numpy >= 1.16.1",
-        "pandas >= 0.24.1",
-        "scikit-learn >= 0.20.2"
+
     ],
 
     # List additional groups of dependencies here (e.g. development
@@ -90,8 +84,6 @@ setup(
     # "scripts" keyword. Entry points provide cross-platform support and allow
     # pip to create the appropriate form of executable for the target platform.
     entry_points={
-        'console_scripts': [
-            "clus = clustering.main:main"
-        ],
+
     },
 )

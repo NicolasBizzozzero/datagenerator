@@ -9,8 +9,12 @@ Number = Union[float, int]
 
 
 class Column:
-    def __init__(self, label: str = None):
+    def __init__(self, label: str = None,
+                 missing_value_probability: float = 0.,
+                 missing_value=math.nan):
         self.label = label
+        self.missing_value_probability = missing_value_probability
+        self.missing_value = missing_value
 
     def get_label(self) -> int:
         global DEFAULT_FORMAT_LABEL
@@ -22,6 +26,9 @@ class Column:
         else:
             return self.label
 
+    def _is_missing_value(self):
+        return random.uniform(0, 1) < self.missing_value_probability
+
 
 class RandomInteger(Column):
     def __init__(self, floor: int, ceil: int, *args,
@@ -31,7 +38,8 @@ class RandomInteger(Column):
         self.ceil = ceil
 
     def compute_value(self) -> int:
-        return random.randint(self.floor, self.ceil)
+        return self.missing_value if super()._is_missing_value() else \
+            random.randint(self.floor, self.ceil)
 
 
 class RandomFloat(Column):
@@ -41,7 +49,8 @@ class RandomFloat(Column):
         self.ceil = ceil
 
     def compute_value(self) -> float:
-        return random.uniform(self.floor, self.ceil)
+        return self.missing_value if super()._is_missing_value() else \
+            random.uniform(self.floor, self.ceil)
 
 
 class Constant(Column):
@@ -50,7 +59,8 @@ class Constant(Column):
         self.value = value
 
     def compute_value(self) -> object:
-        return self.value
+        return self.missing_value if super()._is_missing_value() else \
+            self.value
 
 
 class Identifier(Column):
@@ -61,7 +71,8 @@ class Identifier(Column):
 
     def compute_value(self) -> int:
         self.current_value += 1
-        return self.current_value - 1
+        return self.missing_value if super()._is_missing_value() else \
+            self.current_value - 1
 
 
 class Choice(Column):
@@ -70,7 +81,8 @@ class Choice(Column):
         self.choices = choices
 
     def compute_value(self) -> object:
-        return random.choice(self.choices)
+        return self.missing_value if super()._is_missing_value() else \
+            random.choice(self.choices)
 
 
 class NaN(Column):
@@ -78,12 +90,9 @@ class NaN(Column):
         super().__init__(*args, **kwaargs)
 
     def compute_value(self) -> math.nan:
-        return math.nan
+        return self.missing_value if super()._is_missing_value() else \
+            math.nan
 
 
 if __name__ == '__main__':
     pass
-    truc = NaN()
-    for _ in range(10):
-        print(truc.compute_value())
-    print(truc.get_label())

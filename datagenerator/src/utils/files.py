@@ -1,6 +1,3 @@
-from src.vrac.strings import concatenation
-
-
 def get_line(filepath: str, line_number: int) -> str:
     """ Return the content of file at the line indicated by line_number. Return
         an empty string if line_number outreach the actual number of lines in

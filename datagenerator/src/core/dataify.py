@@ -1,4 +1,4 @@
-def dataify(*columns, lines=1000, header=True):
+def dataify(*columns, lines=10, header=False):
     data = []
     if header:
         data.append(_retrieve_header(columns))
